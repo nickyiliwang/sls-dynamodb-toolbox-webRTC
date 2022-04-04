@@ -7,3 +7,4 @@ Initial plan
 
 Credits:
 1. [WebRTC in 100 Seconds](https://www.youtube.com/watch?v=WmR9IMUD_CY)
+2. [crub db](https://github.com/hidjou/classsed-lambda-dynamodb-api/blob/master/.gitignore)
