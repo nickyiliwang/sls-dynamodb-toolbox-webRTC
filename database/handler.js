@@ -6,8 +6,18 @@ const DocumentClient = new DynamoDB.DocumentClient({
   region: "localhost",
   endpoint: "http://localhost:8000",
 });
-const { v4: uuid } = require("uuid");
+
 const tableName = process.env.POSTS_TABLE;
+
+// Instantiate a table
+const MyTable = new Table({
+  // Specify table name (used by DynamoDB)
+  name: tableName,
+  partitionKey: "id",
+
+  // Add the DocumentClient
+  DocumentClient,
+});
 
 // Create a response
 function response(statusCode, message) {
@@ -16,20 +26,6 @@ function response(statusCode, message) {
     body: JSON.stringify(message),
   };
 }
-
-// Instantiate a table
-const MyTable = new Table({
-  // Specify table name (used by DynamoDB)
-  name: tableName,
-
-  // Define partition and sort keys
-  partitionKey: "pk",
-  // sortKey: "sk",
-
-  // Add the DocumentClient
-  DocumentClient,
-});
-
 const Customer = new Entity({
   // Specify entity name
   name: "Customer",
@@ -37,12 +33,7 @@ const Customer = new Entity({
   // Define attributes
   attributes: {
     id: { partitionKey: true }, // flag as partitionKey
-    // sk: { hidden: true, sortKey: true }, // flag as sortKey and mark hidden
-    name: { map: "data" }, // map 'name' to table attribute 'data'
-    co: { alias: "company" }, // alias table attribute 'co' to 'company'
     age: { type: "number" }, // set the attribute type
-    // status: ["sk", 0], // composite key mapping
-    // date_added: ["sk", 1], // composite key mapping
   },
 
   // Assign it to our table
@@ -70,29 +61,31 @@ module.exports.createPost = async (event, context, callback) => {
   // Create my item (using table attribute names or aliases)
   let item = {
     id: 123,
-    name: "Jane Smith",
-    company: "ACME",
     age: 35,
-    // status: "active",
-    // date_added: "2020-04-24",
   };
 
   // let result = await Customer.put(item)
 
   return Customer.put(item)
-    .then(() => {
+    .then((objectSaved) => {
       return callback(null, response(201, objectSaved));
     })
     .catch((err) => {
-      return response(null, response(err.statusCode, err));
+      return callback(null, response(err.statusCode, err));
     });
 };
 
 // Get a single post
 module.exports.getPost = (event, context, callback) => {
-  const id = event.pathParameters.id;
+  //   const id = event.pathParameters.id;
 
-  return Customer.get({ id: id, status: "active" })
+  let item = {
+    id: 123,
+    status: "active",
+    date_added: "2020-04-24",
+  };
+
+  return Customer.get(item)
     .then((myItem) => {
       // the item was found
       return callback(null, response(200, myItem));
