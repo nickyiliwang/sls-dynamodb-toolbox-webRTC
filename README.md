@@ -20,8 +20,9 @@ What did I learn from trying to make something so simple work in DynamoDB:
 5. Discovered many past and current packages:
    1. DDB DataMapper For JS: I wanted to put an object into DDB, and found this package, it is depreciated, and maintainer recommended TypeDORM, like TypeORM, I need to learn more about Object relational mapping
    2. dynamodb-toolbox: promised to make single table design easy, wonder if I'm not understanding where I can use this package because we are defining the ddb table in yaml file, and this pkg can define a table and create entities from the function, there are very little documentation on where I can use this package. Big mystery
-   3. 
-
+   3. Dynamoose: did not spend a lot of time on this package, but the funny thing is on dev.to there was an comment telling people to not use this package if they value their hair.
+6. Finally, I managed to make dynamodb-toolbox work, it was a lot of trial and error, but I think you can't create any tables because it has to be created with yaml file. But you can develop it once the config is matching, needs more testing.
+7. In conclusion, before using DDB, you must learn the basics or you will have a bad time. oh well.
 
 
 Credits:
