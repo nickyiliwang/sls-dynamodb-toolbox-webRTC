@@ -1,9 +1,10 @@
 "use strict";
 const AWS = require("aws-sdk");
+
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: "2012-08-10" });
 const { v4: uuid } = require("uuid");
 
-const postsTable = process.env.POSTS_TABLE;
+const tableName = process.env.POSTS_TABLE;
 // Create a response
 function response(statusCode, message) {
   return {
@@ -44,7 +45,7 @@ module.exports.createPost = (event, context, callback) => {
 
   return db
     .put({
-      TableName: postsTable,
+      TableName: tableName,
       Item: post,
     })
     .promise()
@@ -57,7 +58,7 @@ module.exports.createPost = (event, context, callback) => {
 module.exports.getAllPosts = (event, context, callback) => {
   return db
     .scan({
-      TableName: postsTable,
+      TableName: tableName,
     })
     .promise()
     .then((res) => {
@@ -73,7 +74,7 @@ module.exports.getPost = (event, context, callback) => {
     Key: {
       id: id,
     },
-    TableName: postsTable,
+    TableName: tableName,
   };
 
   return db
