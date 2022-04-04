@@ -7,7 +7,8 @@ Initial plan
 
 
 sls_ddb package:
-@aws/dynamodb-data-mapper
+1. @aws/dynamodb-data-mapper
+2. serverless-plugin-typescript
 
 Credits:
 1. [WebRTC in 100 Seconds](https://www.youtube.com/watch?v=WmR9IMUD_CY)

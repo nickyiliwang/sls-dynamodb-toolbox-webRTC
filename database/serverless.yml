@@ -3,6 +3,18 @@ service: sls
 custom:
   settings:
     POSTS_TABLE: webRTC
+  # local dynamodb dev 
+  serverless-offline:
+    httpPort: 3000
+    lambdaPort: 3002
+    endpoint: http://localhost:3002
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 3002
+      inMemory: true
+      migrate: true
 
 provider:
   name: aws
@@ -31,18 +43,24 @@ functions:
     - http:
         path: /post
         method: post
-  getAllPosts:
-    handler: handler.getAllPosts
-    events:
-    - http:
-        path: /posts
-        method: get
+  # getAllPosts:
+  #   handler: handler.getAllPosts
+  #   events:
+  #   - http:
+  #       path: /posts
+  #       method: get
   getPost:
     handler: handler.getPost
     events:
     - http:
         path: /post/{id}
         method: get
+  test:
+    handler: handler.test
+    events:
+    - http:
+        path: /post/test
+        method: post
 
 resources:
   Resources:
@@ -59,3 +77,10 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:custom.settings.POSTS_TABLE}-table
+
+
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-dynamodb-local
+  - serverless-offline
