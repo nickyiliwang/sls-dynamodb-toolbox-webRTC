@@ -1,10 +1,19 @@
 # webRTC_terraform
 
-Initial plan
+Description:
+This repo was supposed to be learning about webRTC but instead evolved into learning about dynamodb and I have successfully made dynamodb-toolbox package work. Therefore it's name changed to sls-dynamodb-toolbox
+
+Initial plan:
 1. Following a guide to learn the basics
 2. See if I can provision an EC2 instance with docker installed and setup an signaling server running with peerJS at port 9000
 3. Write the terraform template for it
 
+Docker and PeerJS on EC2:
+1. [docker setup on EC2](https://www.cyberciti.biz/faq/how-to-install-docker-on-amazon-linux-2/)
+2. Open port 9000 on security group to all ips
+3. login to EC2 instance
+4. sudo docker run -p 9000:9000 -d peerjs/peerjs-server
+5. http://ec2-public-ip:9000/myapp/peerjs/id 
 
 sls_ddb package:
 1. @aws/dynamodb-data-mapper
