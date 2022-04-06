@@ -1,4 +1,4 @@
-# webRTC_terraform
+# sls-dynamodb-toolbox
 
 Description:
 This repo was supposed to be learning about webRTC but instead evolved into learning about dynamodb and I have successfully made dynamodb-toolbox package work. Therefore it's name changed to sls-dynamodb-toolbox
